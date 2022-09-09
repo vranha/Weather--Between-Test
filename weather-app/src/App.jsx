@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.scss";
-import WeatherCard from "./components/WeatherCard";
 import DropdownComponent from "./components/DropdownComponent";
 import axios from "axios";
 import { calcAverage } from "./hooks/calcAverage";
 import { calcRainChanceIcon } from "./hooks/calcRainChanceIcon";
 import moment from "moment";
+import { Navigate, Route, Routes } from "react-router-dom";
+import Week from "./pages/Week";
+import Day from "./pages/Day";
 
 function App() {
     const [day, setDay] = useState("");
@@ -33,20 +35,6 @@ function App() {
     }, [averageRain, drop, icon]);
 
 
-    // TODO Hacer la llamada para pintar las horas al hacer click en un dia
-
-    const getDay = useCallback(async () => {
-
-      const date = (moment().format("yyyy-MM-DD"))
-
-        const response = await axios.get(`http://localhost:5000/weather-api-7c25c/us-central1/app/api/weather/find?date=${date}&location=${drop}`)
-        const day = response.data.resultado[0].doc
-        calcAverage(day.hourly_rain_chance, setAverageRain)
-        setDay(day)
-        setIcon(calcRainChanceIcon(averageRain))
-        console.log(icon)
-    }, [averageRain, drop, icon])
-
     useEffect(() => {
         getDays();
         console.log(day);
@@ -54,25 +42,18 @@ function App() {
 
     return (
         <div className="App">
-            <DropdownComponent setDrop={setDrop} drop={drop} />
-            {days && (
-                <div className="containerCard">
-                    <div className="containerTitles">
-                        <h2 className="city">{city}</h2>
-                        <h3 className="country">{country}</h3>
-                    </div>
-                    <div className="cards">
-                        {days.map((day, i , arr) => {
-                          if (arr.length -1 === i) {
-                            const grid = 'grid'
-                            return  <WeatherCard key={day.id} day={day.doc} grid={grid} />
-                          }
-
-                          return  <WeatherCard key={day.id} day={day.doc}  />
-                      })}
-                    </div>
-                </div>
-            )}
+            <Routes>
+                <Route path="*" element={<Navigate replace to="/" />} />
+                <Route path="/" element={<Navigate to="/week" />} />
+                <Route path="/week" element={
+                    <Week days={days} city={city} country={country}>
+                        <DropdownComponent  setDrop={setDrop} drop={drop} /> 
+                    </Week>} />
+                <Route path="/day" element={
+                    <Day city={city} country={country} drop={drop}>
+                        <DropdownComponent  setDrop={setDrop} drop={drop} /> 
+                    </Day>} />
+            </Routes>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import moment from "moment";
 import styles from './WeatherCard.module.scss'
 import { calcAverage } from "../hooks/calcAverage";
 import { calcRainChanceIcon } from "../hooks/calcRainChanceIcon";
+import { useNavigate } from "react-router-dom";
 
 function WeatherCard({ day, grid }) {
 
@@ -16,14 +17,21 @@ function WeatherCard({ day, grid }) {
         setIcon(calcRainChanceIcon(averageRain))
     }
 
+    const navigate = useNavigate()
+
     
     useEffect(() => {
         getCalcs()
         console.log(grid)
     }, [getCalcs]);
 
+    const handleDay = () => {
+       navigate(`/day?date=${day.date}`)
+    }
+
+
     return (
-        <div className={styles.card} style={grid &&{gridColumn: 'span 2', }}>
+        <div className={styles.card} style={grid &&{gridColumn: 'span 2', }} onClick={handleDay}>
             <h4 style={grid &&{alignSelf: 'center', }}>{moment(day.date).format("dddd")} </h4>
             <h5 style={grid &&{alignSelf: 'center', }}>{moment(day.date).format("MMM DD")}</h5>
             <div style={grid &&{gap: '60px', }} className={styles.containerRain}>
