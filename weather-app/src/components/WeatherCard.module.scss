@@ -1,0 +1,67 @@
+
+.card {
+    border: 2px solid var(--borders);
+    border-radius: 5px;
+    padding:10px 20px;
+    margin: 20px 5px;
+    background: var(--bg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.185);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+        background: var(--borders);
+    }
+
+    h4 {
+        color: var(--green);
+        font-size: 14px;
+        align-self: flex-start;
+    }
+    
+    h5 {
+        font-size: 14px;
+        font-weight: 500;
+        align-self: flex-start;
+    }
+
+    .containerRain {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        margin: 0px 0px 20px -15px;
+
+        .rightRain {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            small {
+            font-size:10px;
+            position: relative;
+            bottom: 6px;
+            color: var(--subtitle)
+        }
+        }
+        
+    }
+
+    h3 {
+        margin-top:-10px;
+        font-size: 26px;
+        color: var(--red);
+        
+        span{
+            font-weight: 400;
+            color: var(--subtitle);
+        }
+        strong {
+            color: var(--blue);
+        }
+    }
+
+}
+

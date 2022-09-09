@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const moment = require('moment')
 
 app.use(cors({ origin: true }));
 
@@ -56,7 +57,6 @@ app.post('/api/weather', (req, res) => {
           await db.collection('weather').doc('/' + req.body.id + '/')
               .create({
                 date: req.body.date,
-                rain_chance: req.body.rain_chance,
                 location: {
                     city: req.body.location.city,
                     country: req.body.location.country
@@ -83,7 +83,6 @@ app.get("/api/weather", async (req, res) => {
         const response = docs.map((doc) => ({
             id: doc.id,
             date: doc.data().date,
-            rain_chance: doc.data().rain_chance,
                 location: {
                     city: doc.data().location.city,
                     country: doc.data().location.country
@@ -104,6 +103,42 @@ app.get("/api/weather", async (req, res) => {
         try{
             const citiesRef = db.collection('weather')
             const queryRef = citiesRef.where('date', '==', req.query.date).where('location.city', '==', req.query.location)
+            const docs = await queryRef.get();
+
+            console.log(docs)
+            const response = []
+            
+            docs.forEach(doc => {
+                console.log(doc.data());
+                response.push({id: doc.id, doc: doc.data()})
+              });
+
+            return res.status(200).json(salida("200", response))
+        } catch(error) {
+            return res.status(500).send(salida("500", error));
+        }
+    ;
+  });
+  
+// Buscar la semana actual
+  app.get('/api/weather/findWeek', async (req, res) =>{
+
+    
+      var currentDate = moment();
+      var weekStart = currentDate.clone().startOf('isoWeek');
+      var days = [];
+
+      for (var i = 0; i <= 6; i++) {
+        days.push(moment(weekStart).add(i, 'days').format("yyyy-MM-DD"));
+      }
+      console.log(days);
+    
+    
+    
+    
+        try{
+            const citiesRef = db.collection('weather')
+            const queryRef = citiesRef.where('date', 'in', days).where('location.city', '==', req.query.location)
             const docs = await queryRef.get();
 
             console.log(docs)
@@ -151,7 +186,6 @@ app.get("/api/weather", async (req, res) => {
         
         await doc.update({
             date: req.body.date,
-                rain_chance: req.body.rain_chance,
                 location: {
                     city: req.body.location.city,
                     country: req.body.location.country
