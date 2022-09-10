@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import moment from "moment";
 import styles from './WeatherCard.module.scss'
 import { calcAverage } from "../hooks/calcAverage";
@@ -11,18 +11,17 @@ function WeatherCard({ day, grid }) {
     const [averageRain, setAverageRain] = useState('');
     const [icon, setIcon] = useState('');
     
-    const getCalcs = () => {
+    const getCalcs = useCallback( () => {
         calcAverage(day.hourly_temperature, setAverageTemp);
         calcAverage(day.hourly_rain_chance, setAverageRain)
         setIcon(calcRainChanceIcon(averageRain))
-    }
+    }, [averageRain, day.hourly_temperature, day.hourly_rain_chance])
 
     const navigate = useNavigate()
 
     
     useEffect(() => {
         getCalcs()
-        console.log(grid)
     }, [getCalcs]);
 
     const handleDay = () => {

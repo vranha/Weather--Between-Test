@@ -2,25 +2,26 @@ import { useCallback, useEffect, useState } from "react";
 import "./App.scss";
 import DropdownComponent from "./components/DropdownComponent";
 import axios from "axios";
-import { calcAverage } from "./hooks/calcAverage";
-import { calcRainChanceIcon } from "./hooks/calcRainChanceIcon";
-import moment from "moment";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Week from "./pages/Week";
 import Day from "./pages/Day";
 
 function App() {
-    const [day, setDay] = useState("");
-
     const [days, setDays] = useState([]);
-
-    const [drop, setDrop] = useState("Madrid");
-    const [averageRain, setAverageRain] = useState("");
-    const [icon, setIcon] = useState("");
+    // const [drop, setDrop] = useState("Barcelona");
+    const [drop, setDrop] = useState(() => {
+        // getting stored value
+        const saved = localStorage.getItem("selectedCity");
+        const initialValue = JSON.parse(saved);
+        return initialValue || "Barcelona";
+      }); ;
     const [country, setCountry] = useState("");
     const [city, setCity] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const getDays = useCallback(async () => {
+        try {
+        setLoading(true)
         const response = await axios.get(
             `http://localhost:5000/weather-api-7c25c/us-central1/app/api/weather/findWeek?&location=${drop}`
         );
@@ -28,17 +29,22 @@ function App() {
         setDays(daysResponse);
         setCountry(daysResponse[0].doc.location.country);
         setCity(daysResponse[0].doc.location.city);
+        localStorage.setItem("selectedCity", JSON.stringify(daysResponse[0].doc.location.city));
+        console.log(localStorage.fav);
 
-        // calcAverage(day.hourly_rain_chance, setAverageRain)
-        // setIcon(calcRainChanceIcon(averageRain))
-        // console.log(icon)
-    }, [averageRain, drop, icon]);
+        setLoading(false)
+
+        } catch (error) {
+            console.log('Error -->', error)
+        }
+
+    }, [drop]);
 
 
     useEffect(() => {
         getDays();
-        console.log(day);
     }, [getDays, drop]);
+
 
     return (
         <div className="App">
@@ -46,11 +52,11 @@ function App() {
                 <Route path="*" element={<Navigate replace to="/" />} />
                 <Route path="/" element={<Navigate to="/week" />} />
                 <Route path="/week" element={
-                    <Week days={days} city={city} country={country}>
+                    <Week days={days} city={city} country={country} loading={loading}>
                         <DropdownComponent  setDrop={setDrop} drop={drop} /> 
                     </Week>} />
                 <Route path="/day" element={
-                    <Day city={city} country={country} drop={drop}>
+                    <Day city={city} country={country} drop={drop}  loading={loading} setLoading={setLoading}>
                         <DropdownComponent  setDrop={setDrop} drop={drop} /> 
                     </Day>} />
             </Routes>

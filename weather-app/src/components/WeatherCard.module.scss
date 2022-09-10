@@ -1,4 +1,6 @@
 
+@import "../../styles/responsive.scss";
+
 .card {
     border: 2px solid var(--borders);
     border-radius: 5px;
@@ -11,6 +13,10 @@
     align-items: center;
     cursor: pointer;
     transition: 0.3s;
+
+    @include mobile {
+        margin: 5px;
+      }
 
     &:hover {
         background: var(--borders);

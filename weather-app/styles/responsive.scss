@@ -1,6 +1,4 @@
-$layout_bp_mobile: 560px;
-$layout_bp_tablet: 800px;
-$layout_bp_desktop: 1280px;
+$layout_bp_mobile: 620px;
 
 // SCSS Mixins
 @mixin mobile {
@@ -9,9 +7,4 @@ $layout_bp_desktop: 1280px;
   }
 }
 
-@mixin tablet {
-  @media only screen and (max-width: #{$layout_bp_tablet}) {
-    @content;
-  }
-}
 

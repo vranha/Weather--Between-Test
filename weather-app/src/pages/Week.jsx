@@ -1,9 +1,13 @@
 import React from "react";
+import Loading from "../components/Loading";
 import WeatherCard from "../components/WeatherCard";
 
-function Week({ children, days, city, country }) {
+function Week({ children, days, city, country, loading }) {
 
-  
+    if (loading) {
+        return <Loading/>
+    }
+
     return (
         <div>
             {children}

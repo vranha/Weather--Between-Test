@@ -17,8 +17,9 @@ function DayCard({ day }) {
 
                     const temp = day.hourly_temperature.map((temp, j) => {
                         if (i === j) {
-                            return <span style={temp > 20 ? {color:'var(--red)'}: {color:'var(--blue)'}}>{temp}</span>
+                            return <span key={uuidv4()} style={temp > 20 ? {color:'var(--red)'}: {color:'var(--blue)'}}>{temp}</span>
                         }
+                        return null
                     })
                     return (
                         <div className={styles.hour} key={uuidv4()}>

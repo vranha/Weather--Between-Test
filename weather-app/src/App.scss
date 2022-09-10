@@ -1,3 +1,4 @@
+@import "../styles/responsive.scss";
 
 .App{
     display: flex;
@@ -27,6 +28,11 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr );
         grid-auto-rows: minmax(200px, auto);
+
+        @include mobile {
+            grid-template-columns:repeat(auto-fill, 150px)
+                    
+        }
         
     }
 }
@@ -56,10 +62,31 @@
     text-align: center;
     color: var(--green);
     cursor: default;
-    // margin:-10px;
 }
 
 .day{
     width: 100%;
     margin-top: -30px;
+}
+
+.back {
+    color: var(--yellow);
+    position: absolute;
+    top: 48px;
+    left: 60px;
+    font-size: 50px;
+    cursor: pointer;
+
+    @include mobile {
+        left: 10px;
+                
+    }
+}
+
+.loading {
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
