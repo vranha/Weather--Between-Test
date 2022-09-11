@@ -1,5 +1,5 @@
 
-# Weather app - Between Fullstack test
+# Weather app - Between Fullstack test - Oriol Arias
 
 
 ![App Screenshot](https://i.postimg.cc/W1WH7ZyD/6.png)
