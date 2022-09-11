@@ -66,21 +66,50 @@
 
 .day{
     width: 100%;
-    margin-top: -30px;
+}
+
+.containerRealtime {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+    width: 100%;
+    transform: scale(1.4)
 }
 
 .back {
     color: var(--yellow);
     position: absolute;
-    top: 48px;
-    left: 60px;
-    font-size: 50px;
+    
+    top: 150px;
+    left: 90px;
+    font-size: 100px;
+    cursor: pointer;
+    // transform: translate(-50%, -50%); 
+    
+    @include mobile {
+        top: 48px;
+        left: 10px;
+        font-size: 50px;
+        
+    }
+}
+
+.change {
+    height: 0;
+    position: absolute;
+    top: 150px;
+    right: 90px;
+    filter:hue-rotate(45deg)brightness(2.1)saturate(90%);
     cursor: pointer;
 
     @include mobile {
-        left: 10px;
-                
+        position: relative;
+        top: -60px;
+        right: 0px;
+        transform: scale(0.5)
     }
+
 }
 
 .loading {
@@ -89,4 +118,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
+
+

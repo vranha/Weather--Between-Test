@@ -14,7 +14,7 @@ function Loading() {
 
   return (
     <div className="loading">
-        <Lottie options={{ animationData: loading, ...defaultOptions }} width={300} height={300} style={{padding: 20}}/>
+        <Lottie options={{ animationData: loading, ...defaultOptions }} width={300} height={300} />
     </div>
   )
 }

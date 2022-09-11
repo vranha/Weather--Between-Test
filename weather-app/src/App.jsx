@@ -23,14 +23,13 @@ function App() {
         try {
         setLoading(true)
         const response = await axios.get(
-            `http://localhost:5000/weather-api-7c25c/us-central1/app/api/weather/findWeek?&location=${drop}`
+            `https://us-central1-weather-api-7c25c.cloudfunctions.net/app/api/weather/findWeek?&location=${drop}`
         );
         const daysResponse = response.data.resultado;
         setDays(daysResponse);
         setCountry(daysResponse[0].doc.location.country);
         setCity(daysResponse[0].doc.location.city);
         localStorage.setItem("selectedCity", JSON.stringify(daysResponse[0].doc.location.city));
-        console.log(localStorage.fav);
 
         setLoading(false)
 

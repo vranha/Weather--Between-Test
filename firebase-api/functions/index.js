@@ -7,6 +7,7 @@ const moment = require('moment')
 
 app.use(cors({ origin: true }));
 
+
 var permisos = require("./permisos.json");
 admin.initializeApp({
   credential: admin.credential.cert(permisos),
