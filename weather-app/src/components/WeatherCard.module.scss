@@ -1,14 +1,13 @@
-
 @import "../../styles/responsive.scss";
 
 .card {
     border: 2px solid var(--borders);
     border-radius: 5px;
-    padding:10px 20px;
+    padding: 10px 20px;
     margin: 20px 5px;
     background: var(--bg);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.185);
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
@@ -16,7 +15,7 @@
 
     @include mobile {
         margin: 5px;
-      }
+    }
 
     &:hover {
         background: var(--borders);
@@ -27,7 +26,7 @@
         font-size: 14px;
         align-self: flex-start;
     }
-    
+
     h5 {
         font-size: 14px;
         font-weight: 500;
@@ -40,27 +39,35 @@
         justify-content: flex-start;
         margin: 0px 0px 20px -15px;
 
+        .containerImg {
+            height: 64px;
+            width: 64px;
+        }
+
         .rightRain {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
 
             small {
-            font-size:10px;
-            position: relative;
-            bottom: 6px;
-            color: var(--subtitle)
+                font-size: 10px;
+                position: relative;
+                bottom: 6px;
+                color: var(--subtitle);
+
+                @include mobile {
+                    line-height: 1.2;
+                }
+            }
         }
-        }
-        
     }
 
     h3 {
-        margin-top:-10px;
+        margin-top: -10px;
         font-size: 26px;
         color: var(--red);
-        
-        span{
+
+        span {
             font-weight: 400;
             color: var(--subtitle);
         }
@@ -68,6 +75,4 @@
             color: var(--blue);
         }
     }
-
 }
-

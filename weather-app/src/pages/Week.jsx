@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Loading from "../components/Loading";
 import WeatherCard from "../components/WeatherCard";
 
-function Week({ children, days, city, country, loading }) {
+function Week({ children, days, city, country, loading, setRealtime }) {
+    useEffect(() => {
+        setRealtime(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (loading) {
-        return <Loading/>
+        return <Loading />;
     }
 
     return (
@@ -21,10 +25,10 @@ function Week({ children, days, city, country, loading }) {
                         {days.map((day, i, arr) => {
                             if (arr.length - 1 === i) {
                                 const grid = "grid";
-                                return <WeatherCard key={day.id} day={day.doc} grid={grid}/>;
+                                return <WeatherCard key={day.id} day={day.doc} grid={grid} />;
                             }
 
-                            return <WeatherCard key={day.id} day={day.doc} />;
+                            return <WeatherCard key={day.id} day={day.doc} id={day.id} />;
                         })}
                     </div>
                 </div>

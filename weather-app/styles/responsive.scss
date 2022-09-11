@@ -2,9 +2,7 @@ $layout_bp_mobile: 620px;
 
 // SCSS Mixins
 @mixin mobile {
-  @media only screen and (max-width: #{$layout_bp_mobile}) {
-    @content;
-  }
+    @media only screen and (max-width: #{$layout_bp_mobile}) {
+        @content;
+    }
 }
-
-
